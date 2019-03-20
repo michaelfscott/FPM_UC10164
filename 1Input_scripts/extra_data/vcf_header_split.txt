@@ -1,0 +1,37 @@
+##fileformat=VCFv4.1
+##FILTER=<ID=LowQual,Description="Low quality">
+##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth (reads with MQ=255 or with bad mates are filtered)">
+##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype Quality">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=PL,Number=G,Type=Integer,Description="Normalized, Phred-scaled likelihoods for genotypes as defined in the VCF specification">
+##contig=<ID=chr5A:1-400000000,length=400000000>
+##contig=<ID=chr5A:4000001-700855599,length=300855599>
+##contig=<ID=chr4A:1-400000000,length=400000000>
+##contig=<ID=chr4A:400000001-726427787,length=326427787>
+##contig=<ID=chr3B:1-400000000,length=400000000>
+##contig=<ID=chr3B:400000001-841096276,length=441096276>
+##contig=<ID=chr4B:1-400000000,length=400000000>
+##contig=<ID=chr4B:400000001-673896466,length=273896466>
+##contig=<ID=chr2B:1-400000000,length=400000000>
+##contig=<ID=chr2B:400000001-803365466,length=403365466>
+##contig=<ID=chr7A:1-400000000,length=400000000>
+##contig=<ID=chr7A:400000001-727576108,length=327576108>
+##contig=<ID=chr1A:1-400000000,length=400000000>
+##contig=<ID=chr1A:400000001-593586810,length=193586810>
+##contig=<ID=chr3A:1-400000000,length=400000000>
+##contig=<ID=chr3A:400000001-754274518,length=354274518>
+##contig=<ID=chr2A:1-400000000,length=400000000>
+##contig=<ID=chr2A:400000001-775183943,length=375183943>
+##contig=<ID=chr1B:1-400000000,length=400000000>
+##contig=<ID=chr1B:400000001-690537804,length=290537804>
+##contig=<ID=chr6B:1-400000000,length=400000000>
+##contig=<ID=chr6B:400000001-703217322,length=303217322>
+##contig=<ID=chrUn:1-400000000,length=400000000>
+##contig=<ID=chrUn:400000001-430828851,length=30828851>
+##contig=<ID=chr6A:1-400000000,length=400000000>
+##contig=<ID=chr6A:400000001-621432051,length=221432051>
+##contig=<ID=chr7B:1-400000000,length=400000000>
+##contig=<ID=chr7B:400000001-755408349,length=355408349>
+##contig=<ID=chr5B:1-400000000,length=400000000>
+##contig=<ID=chr5B:400000001-712180895,length=312180895>
