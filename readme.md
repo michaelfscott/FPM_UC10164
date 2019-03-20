@@ -2,6 +2,12 @@
 
 These scripts are for replication of the analyses in Scott et al. (2019) "Whole genome sequence from 3,000-year-old Egyptian emmer wheat reveals dispersal and domestication history". 
 
+<h3>Overview </h3>
+
+<p>Scripts are organised into groups that should be run sequentially. For example, 2Reference_Genomes is used to prepare the reference genomes, which is necessary for Alignment and Variant Calling (3Alignments_And_Variant_Calls).
+</p>
+<p>Within each directory, each script begins with STEP[N]. All scripts with the same number [N] are independent of one another. However, STEP[N] may require that all STEP[N-1] jobs have been completed. That is, these steps should be run sequentially.
+</p>
 
 <h3>COMPUTING ENVIRONMENT </h3>
 
