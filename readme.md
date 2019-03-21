@@ -4,9 +4,9 @@ These scripts are for replication of the analyses in Scott et al. (2019) "Whole 
 
 <h3>Overview </h3>
 
-<p>Scripts are organised into groups that should be run sequentially. For example, 2Reference_Genomes is used to prepare the reference genomes, which is necessary for Alignment and Variant Calling (3Alignments_And_Variant_Calls).
+<p>Jobs are organised into groups that should be run sequentially. For example, 2Reference_Genomes is used to prepare the reference genomes, which is necessary for Alignment and Variant Calling (3Alignments_And_Genotype_Calls).
 </p>
-<p>Within each directory, each script begins with STEP[N]. All scripts with the same number [N] are independent of one another. However, STEP[N] may require that all STEP[N-1] jobs have been completed. That is, these steps should be run sequentially.
+<p>Within each directory, each script begins with STEP[N]. All scripts with the same number [N] are independent of one another. However, STEP[N] may require that all STEP[N-1] jobs have been successfully completed. That is, these steps should be run sequentially.
 </p>
 
 <h3>COMPUTING ENVIRONMENT </h3>
@@ -47,8 +47,9 @@ Another environmental variable is provided when submitting scripts: $TMPDIR. Thi
 
 <h3> VARIANTS </h3>
 
-<p>To skip the alignment and variant calling steps. The variants can be downloaded from
+<p>To skip the alignment and genotype calling steps. The variants can be downloaded from
 </p>
 
 <p>This vcf also includes genotypes called from diploid outgroup species using data accession numbers SRR4010671 and SRR4010672 (Triticum urartu) and SAMEA2342530 (Aegilops speltoides) used for A and B subgenome outgroup genotypes, respectively. 
 </p>
+
