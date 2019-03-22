@@ -47,7 +47,7 @@ Another environmental variable is provided when submitting scripts: $TMPDIR. Thi
 
 <h3> VARIANTS </h3>
 
-<p>To skip the alignment and genotype calling steps. The variants can be downloaded from
+<p>To skip the alignment and genotype calling steps. The variants can be downloaded from [this link](http://mtweb.cs.ucl.ac.uk/mus/www/aDNA_emmer_wheat/mapQ35/)
 </p>
 
 <p>This vcf also includes genotypes called from diploid outgroup species using data accession numbers SRR4010671 and SRR4010672 (Triticum urartu) and SAMEA2342530 (Aegilops speltoides) used for A and B subgenome outgroup genotypes, respectively. 
