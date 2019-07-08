@@ -1,28 +1,5 @@
-#$ -cwd
-#job name
-#$ -N STEP2_Merge_Bread
-#$ -o STEP2_Merge_Bread.log
-#memory and runtime options 
-#$ -l mem=30G
-#$ -l h_rt=48:00:00 
-#$ -S /bin/bash
-#$ -j y
-#request TMPDIR space
-#$ -l tmpfs=80G
-#request number of threads (each has different SGE_TASK_ID variable)
-#$ -t 1-2
-
-#parameters
-numthreads=1
-java_memory_param=18
-
 source ../1Input_scripts/input_data_locations.sh
 source ../1Input_scripts/software.sh
-
-#the following specifies whether we use the trimmed or non-trimmed reads and which reference genome to use
-reference=${project_dir}/2Reference_Genomes/IWGSC_refseq_v1_split/161010_Chinese_Spring_v1.0_pseudomolecules_split.fasta
-species=Bread
-read_type=Collapsed
 
 datadir=${project_dir}/4Alignments/1Align_${species}_${read_type}/SplitReads
 ls -d ${datadir}/* > ${TMPDIR}/${species}_${read_type}_datadirs.txt
@@ -40,6 +17,11 @@ echo "$SGE_TASK_ID merging ${samplename} ${species} ${read_type} at $(date)"
 samtools merge -c -p -b $bamlist ${TMPDIR}/${samplename}.bam 
 echo "$SGE_TASK_ID indexing ${samplename} ${species} ${read_type} at $(date)"
 samtools index ${TMPDIR}/${samplename}.bam
+
+#copy out file before dedup
+echo "$SGE_TASK_ID copying at $(date)"
+mkdir -p ${outdir}/full_bam
+cp ${TMPDIR}/${samplename}.bam* --target-directory=${outdir}/full_bam
 
 #get alignment statistics before marking duplicates (and filtering unmapped reads)
 mkdir -p ${outdir}/stats
@@ -87,4 +69,9 @@ awk -v OFS='\t' '{print $1, 0, $2-1}' ${reference}.fai > ${TMPDIR}/all_chr.bed
 for mapQfilter in 0 1 10 20 25 30 35; do
 samtools bedcov -Q $mapQfilter ${TMPDIR}/all_chr.bed ${TMPDIR}/${samplename}.bam ${TMPDIR}/${samplename}.dedup.bam > ${outdir}/bedcov/chromosomal.mapQ${mapQfilter}.bedcov
 done
+#for Emmer wheat, we will also specifically check coverage of the regions where SNPs will be called
+for mapQfilter in 0 1 10 20 25 30 35; do
+samtools bedcov -Q $mapQfilter ${known_variants}.bed ${TMPDIR}/${samplename}.bam ${TMPDIR}/${samplename}.dedup.bam > ${outdir}/bedcov/SNP.mapQ${mapQfilter}.bedcov
+done
+
 

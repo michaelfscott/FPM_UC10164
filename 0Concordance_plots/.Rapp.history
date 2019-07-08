@@ -1,0 +1,830 @@
+export2<-data.frame(export1[rev(plot_order),])
+export2
+export1
+export2
+grid.arrange(Alabel, outlier_grob, Blabel, scans,  nrow=2, widths=c(0.025,1), heights=c(1.5,3.3))
+plot_export_prefix
+pdf(file=paste0(plot_export_prefix,"TtBtr1_and_chr4B_all_SNPs.pdf"), height= 4.8*(6/3.3), width=8*1.025)#
+grid.arrange(Alabel, outlier_grob, Blabel, scans,  nrow=2, widths=c(0.025,1), heights=c(1.5,3.3))#
+dev.off()
+source("functions.r")
+input_prefix="../../5Variants/3Modern_Samples_Merge_bedfilter_noindels_altref_altbam/mapQ30/"#
+plot_export_prefix="plots/"
+traw<-read_tsv(paste0(input_prefix,"S1minDP2/merged.traw"))
+traw
+traw<-read_tsv(paste0(input_prefix,"S1minDP2/merged.traw")) %>% join_chromosome_halves_rename_samples()
+traw
+metadata_filename="../../2Reference_Genomes/Zavitan_v2/metadata/origins.txt"
+location<-load_metadata(metadata_filename)
+location
+data_dir_diversity<-"Outliers_Avni/data"
+outliers<-load_diversity_scan_data(data_dir_diversity)
+data_dir_diversity<-"Outliers_Avni/data/"
+outliers<-load_diversity_scan_data(data_dir_diversity)
+outliers
+blast_res<-read.table("../../2Reference_Genomes/BLAST/results/array_blast_result7.txt")
+blast_res<-read.table("BLAST/results/array_blast_result7.txt")
+blast_res
+window_size=2000000
+window_size<-2000000
+increments_per_window=2
+window_positions<-get_window_positions(traw, window_size, increments_per_window)
+window_positions
+outliers
+window_positions
+traw
+traw_tbl<-tbl_df(traw) %>% mutate(rounded=plyr::round_any(position, window_size/2, f=ceiling))
+full_join(window_positions , traw_tbl, by=c("chromosome", "rounded"))
+traw_tbl
+window_positions
+full_join(outliers, #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos"))
+outliers_genos<-full_join(outliers, #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	arrange(chromosome, Start_pos)
+outliers_genos
+outliers
+compare<-compare_with_target(outliers_genos, sample)
+outliers_genos
+sample
+sample="UC10164S1"
+compare<-compare_with_target(outliers_genos, sample)
+traw_tbl
+compare
+conc<-concordance_by_outlier_type_window(conc)
+conc<-concordance_by_outlier_type_window(compare)
+conc
+traw_tbl<-tbl_df(traw) %>% mutate(rounded=plyr::round_any(position, window_size/2, f=ceiling)) %>% select(-CHR)
+traw_tbl
+outliers
+outliers_genos<-full_join(select(outliers, -c(Chr, Start_pos)), #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	arrange(chromosome, Start_pos)
+outliers
+outliers_genos<-full_join(select(outliers, -c("Chr", "Start_pos")), #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	arrange(chromosome, Start_pos)
+outliers_genos
+select(outliers, -c("Chr", "Start_pos"))
+outliers_genos<-full_join(select(outliers, -c("CHR", "Chr")), #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	arrange(chromosome, Start_pos)
+outliers_genos
+outliers_genos<-full_join(select(outliers, -c("CHR", "Chr")), #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	arrange(chromosome, Start_pos)
+outliers_genos
+traw_tbl
+traw_tbl<-tbl_df(traw) %>% mutate(rounded=plyr::round_any(position, window_size/2, f=ceiling)) %>% select(-c("CHR", "COUNTED", "ALT")
+traw_tbl<-tbl_df(traw) %>% mutate(rounded=plyr::round_any(position, window_size/2, f=ceiling)) %>% select(-c("CHR", "COUNTED", "ALT"))
+outliers_genos<-full_join(select(outliers, -c("CHR", "Chr")), #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	arrange(chromosome, Start_pos)
+outliers_genos
+traw_tbl<-tbl_df(traw) %>% mutate(rounded=plyr::round_any(position, window_size/2, f=ceiling)) %>% select(-c("CHR", "COUNTED", "ALT", "position"))#
+outliers_genos<-full_join(select(outliers, -c("CHR", "Chr")), #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	arrange(chromosome, Start_pos)
+outliers_genos
+traw_tbl<-tbl_df(traw) %>% mutate(rounded=plyr::round_any(position, window_size/2, f=ceiling)) %>% select(-c("CHR", "SNP", "COUNTED", "ALT", "position"))#
+outliers_genos<-full_join(select(outliers, -c("CHR", "Chr")), #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	arrange(chromosome, Start_pos)
+outliers_genos
+outliers_genos<-full_join(select(outliers, -c("CHR", "Chr")), #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	select(-"Start_pos") %>%#
+	arrange(chromosome, position)
+compare<-compare_with_target(outliers_genos, sample)
+traw_tbl<-tbl_df(traw) %>% mutate(rounded=plyr::round_any(position, window_size/2, f=ceiling)) %>% select(-c("CHR", "SNP", "COUNTED", "ALT"))#
+outliers_genos<-full_join(select(outliers, -c("CHR", "Chr")), #
+		full_join(window_positions , traw_tbl, by=c("chromosome", "rounded")), #
+	by=c("chromosome", "Start_pos")) %>% #
+	select(-"Start_pos") %>%#
+	arrange(chromosome, position)
+compare<-compare_with_target(outliers_genos, sample)
+conc<-concordance_by_outlier_type(compare)
+conc
+concordances<-concordance_by_outlier_type(compare)
+tbl_df(location) %>%#
+ right_join(concordances) %>%#
+ggplot(aes(y= value, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha=0.65, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = customPalette[c(3,6)]) +#
+  scale_shape_manual(values=c(16, 18)) +#
+  ylab("concordance with UC10164") +#
+#  theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside") +#
+  NULL
+facet_names <- list(#
+  'FST_conc'=expression(F[ST]*" outliers"),#
+  'PiRatio'=expression(pi[D]/pi[W]*" outliers"),#
+  'TajD'="Tajima's D outliers",#
+  'other_loci'="other loci"#
+)#
+facet_labeller <- function(variable,value){#
+  return(facet_names[value])#
+}
+tbl_df(location) %>%#
+ right_join(concordances) %>%#
+ggplot(aes(y= value, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha=0.65, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = customPalette[c(3,6)]) +#
+  scale_shape_manual(values=c(16, 18)) +#
+  ylab("concordance with UC10164") +#
+#  theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside") +#
+  NULL
+customPalette <- c("#000000", "#E69F00", "#D55E00", "#009E73", "#CC79A7", "#000066", "#888888", "#56B4E9", "#999999")
+tbl_df(location) %>%#
+ right_join(concordances) %>%#
+ggplot(aes(y= value, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha=0.65, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = customPalette[c(3,6)]) +#
+  scale_shape_manual(values=c(16, 18)) +#
+  ylab("concordance with UC10164") +#
+#  theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside") +#
+  NULL
+tbl_df(location) %>%#
+ right_join(concordances) %>%#
+ggplot(aes(y= genotype, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha=0.65, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = customPalette[c(3,6)]) +#
+  scale_shape_manual(values=c(16, 18)) +#
+  ylab("concordance with UC10164") +#
+#  theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside") +#
+  NULL
+outlier_plots
+concordances
+tbl_df(location) %>%#
+ right_join(concordances) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha=0.65, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = customPalette[c(3,6)]) +#
+  scale_shape_manual(values=c(16, 18)) +#
+  ylab("concordance with UC10164") +#
+#  theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside") +#
+  NULL
+outlier_plotter<-filter(concordances, !Accession %in% c("UC10164S2", "Outgroup"))
+outlier_plotter
+outlier_plots<-tbl_df(location) %>%#
+ right_join(concordances) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha=0.65, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = customPalette[c(3,6)]) +#
+  scale_shape_manual(values=c(16, 18)) +#
+  ylab("concordance with UC10164") +#
+#  theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside") +#
+  NULL
+outlier_plots
+outlier_plotter<-filter(concordances, !Accession %in% c("UC10164S2", "Outgroup")) %>%#
+	left_join(location)
+outlier_plots<-tbl_df(outlier_plotter) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha=0.65, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = customPalette[c(3,6)]) +#
+  scale_shape_manual(values=c(16, 18)) +#
+  ylab("concordance with UC10164") +#
+#  theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside") +#
+  NULL
+outlier_plots
+outlier_plotter
+outlier_plotter$Outlier_type<-factor(outlier_plotter$Outlier_type, levels=c("FST_conc", "PiRatio", "TajD", "other_loci"))
+tbl_df(outlier_plotter) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha=0.65, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = customPalette[c(3,6)]) +#
+  scale_shape_manual(values=c(16, 18)) +#
+  ylab("concordance with UC10164") +#
+#  theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside") +#
+  NULL
+outlier_plot_theme<- theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside") +
+outlier_plot_theme<- theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside")
+tbl_df(outlier_plotter) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha= outlier_plot_alpha, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = outlier_plot_colours) +#
+  scale_shape_manual(values= outlier_plot_pch) +#
+  ylab("concordance with UC10164") +#
+  outlier_plot_theme +#
+  NULL
+#plot parameters#
+outlier_plot_colours<-customPalette[c(3,7)]#
+outlier_plot_pch<-c(16, 18)#
+outlier_plot_alpha=0.65#
+outlier_plot_theme<- theme_minimal() +#
+  theme(legend.position="none", axis.title.x=element_blank()) +#
+  theme(strip.background = element_blank(),#
+	strip.placement = "outside")
+tbl_df(outlier_plotter) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha= outlier_plot_alpha, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = outlier_plot_colours) +#
+  scale_shape_manual(values= outlier_plot_pch) +#
+  ylab("concordance with UC10164") +#
+  outlier_plot_theme +#
+  NULL
+outlier_plot_theme<- theme_minimal() +#
+  	theme(legend.position="none", #
+  		axis.title.x=element_blank(),#
+  		grid.major.x=element_blank(),#
+  		strip.placement = "outside")
+outlier_plot_theme<- theme_minimal() +#
+  	theme(legend.position="none", #
+  		axis.title.x=element_blank(),#
+  		grid.lines.major.x=element_blank(),#
+  		strip.placement = "outside")
+outlier_plot_theme<- theme_minimal() +#
+  	theme(legend.position="none", #
+  		axis.title.x=element_blank(),#
+  		panel.grid.major.x =element_blank(),#
+  		strip.placement = "outside")
+tbl_df(outlier_plotter) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha= outlier_plot_alpha, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = outlier_plot_colours) +#
+  scale_shape_manual(values= outlier_plot_pch) +#
+  ylab("concordance with UC10164") +#
+  outlier_plot_theme +#
+  NULL
+outlier_plot_colours<-customPalette[c(3,6)]
+tbl_df(outlier_plotter) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha= outlier_plot_alpha, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = outlier_plot_colours) +#
+  scale_shape_manual(values= outlier_plot_pch) +#
+  ylab("concordance with UC10164") +#
+  outlier_plot_theme +#
+  NULL
+outlier_plot_colours<-customPalette[c(3,8)]
+tbl_df(outlier_plotter) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha= outlier_plot_alpha, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = outlier_plot_colours) +#
+  scale_shape_manual(values= outlier_plot_pch) +#
+  ylab("concordance with UC10164") +#
+  outlier_plot_theme +#
+  NULL
+outlier_ylab= "concordance with UC10164"
+outlier_plots<-tbl_df(outlier_plotter) %>%#
+ggplot(aes(y= concordance, x=Improvement_status, colour= Improvement_status, shape=Improvement_status)) + #
+  geom_jitter(alpha= outlier_plot_alpha, width=0.2) +#
+  facet_wrap(~ Outlier_type, ncol=4, labeller= facet_labeller) + #
+  scale_colour_manual(values = outlier_plot_colours) +#
+  scale_shape_manual(values= outlier_plot_pch) +#
+  ylab(outlier_ylab) +#
+  outlier_plot_theme +#
+  NULL
+outlier_plots
+traw_regions<-read_tsv(paste0(input_prefix,"merged.regions.traw")) %>% join_chromosome_halves_rename_samples()
+traw_regions
+blast_res
+Br_loci<-data.frame(marker_name=c("TtBtr1-A\n","TtBtr1-B\n"),physical_position=c(61639327/1000000, 97628063/1000000), chromosome=c("chr3A","chr3B"))#
+chr3A_Br<-data.frame(marker_name=c("TtBtr1-A\n"),physical_position=c(61639327/1000000), chromosome=c("chr3A"))#
+chr3B_Br<-data.frame(marker_name=c("TtBtr1-B\n"),physical_position=c(97628063/1000000), chromosome=c("chr3B"))#
+chr4B_physical_position<-apply(blast_res[blast_res$V2=="chr4B",9:10],1,mean)#
+chr4B_marker_name<-gsub("IWB","",blast_res[blast_res$V2=="chr4B",1])#
+chr4B_blast<-data.frame(marker_name=chr4B_marker_name,physical_position= chr4B_physical_position/1000000, chromosome=rep("chr4B",length(chr4B_physical_position)))#
+#remove those outside the plot range#
+chr4B_blast<-chr4B_blast[chr4B_blast$physical_position<580 & chr4B_blast$physical_position>420,]#
+chr4B_QTL_rect<-data.frame(xmin=min(chr4B_blast$physical_position), xmax=max(chr4B_blast$physical_position), ymin=0, ymax=1)#
+chr4B_QTL_region<-data.frame(x=c(475.3916, 540.1921), y=c(1,1))
+accession_cols<-location$Accession[location$Accession %in% colnames(traw_regions)]
+]#
+domesticated_columns
+accession_cols
+domesticated_columns<-accession_cols[(location$Improvement_status=="domesticated" & ! location$Region=="Ancient_Egyptian")]
+domesticated_columns
+accession_cols<-colnames(traw_regions)[colnames(traw_regions)  %in% location$Accession]
+accession_cols
+domesticated_columns<-colnames(traw_regions)[colnames(traw_regions)  %in% location$Accession[(location$Improvement_status=="domesticated" & ! location$Region=="Ancient_Egyptian")]]
+domesticated_columns
+switch_minor_allele<-apply(traw_regions[,domesticated_columns],1,sum,na.rm=TRUE)/apply(!is.na(traw_regions[,domesticated_columns]),1,sum)>1#
+#convert all scores #
+traw_dom_MAF<-traw_regions#
+traw_dom_MAF[switch_minor_allele, accession_cols]<-abs(traw_regions[switch_minor_allele, accession_cols]-2)
+traw_dom_MAF
+sum(!colnames(traw_regions)  %in% location$Accession)
+snp_window_size=150#
+window_move_size=10#
+#
+MAF_by_SNP_window(traw_dom_MAF, snp_window_size, window_move_size, location)
+MAF_by_SNP_window<-MAF_by_SNP_window(traw_dom_MAF, snp_window_size, window_move_size, location)
+source("functions.r")
+MAF_by_SNP<-MAF_by_SNP_window(traw_dom_MAF, snp_window_size, window_move_size, location)
+MAF_by_SNP
+to_plot<-tbl_df(location) %>% full_join(MAF_by_SNP) %>%#
+	filter(!Accession %in% c("UC10164S2", "Outgroup"))
+to_plot<-tbl_df(location) %>% full_join(MAF_by_SNP) %>%#
+	mutate(Improvement_status=ifelse(Accession=="UC10164", "ancient", Improvement_status) %>%#
+	filter(!Accession %in% c("UC10164S2", "Outgroup"))
+to_plot
+to_plot<-tbl_df(location) %>% full_join(MAF_by_SNP) %>%#
+	mutate(Improvement_status=ifelse(Accession=="UC10164", "ancient", Improvement_status)) %>%#
+	filter(!Accession %in% c("UC10164S2", "Outgroup"))
+to_plot
+to_plot<-tbl_df(location) %>% full_join(MAF_by_SNP) %>%#
+	mutate(Improvement_status=ifelse(Accession==sample, "ancient", Improvement_status)) %>%#
+	filter(!Accession %in% c("UC10164S2", "Outgroup"))
+to_plot
+filter(to_plot, is.na(MAF))
+to_plot<-tbl_df(location) %>% right_join(MAF_by_SNP) %>%#
+	mutate(Improvement_status=ifelse(Accession==sample, "ancient", Improvement_status)) %>%#
+	filter(!Accession %in% c("UC10164S2", "Outgroup"))
+tbl_df(to_plot) %>% #
+	filter(chromosome=="chr3A", physical_position > chr3A_Br$physical_position-padding_lower,  physical_position <chr3A_Br$physical_position+ padding_upper) %>%#
+ggplot(aes(x = physical_position, y = MAF)) + #
+	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=0.3) +#
+  ylim(-0.05,1) +#
+  facet_grid(chromosome~., scales="free") +#
+  theme(legend.position="top") +#
+  xlab("median physical position of window (mb)") +#
+  ylab(paste0("frequency of minor allele")) +#
+  scale_color_manual(values = customPalette[c(1,3,6)]) +#
+  scale_alpha_manual(values = c(1, 1, 0.15)) +#
+  geom_vline(data= chr3A_Br, aes(xintercept= physical_position), size=0.75) +#
+  geom_text(data= chr3A_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +#
+  theme(legend.title=element_blank()) +#
+  NULL
+padding_lower=30#
+padding_upper=30
+tbl_df(to_plot) %>% #
+	filter(chromosome=="chr3A", physical_position > chr3A_Br$physical_position-padding_lower,  physical_position <chr3A_Br$physical_position+ padding_upper) %>%#
+ggplot(aes(x = physical_position, y = MAF)) + #
+	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=0.3) +#
+  ylim(-0.05,1) +#
+  facet_grid(chromosome~., scales="free") +#
+  theme(legend.position="top") +#
+  xlab("median physical position of window (mb)") +#
+  ylab(paste0("frequency of minor allele")) +#
+  scale_color_manual(values = customPalette[c(1,3,6)]) +#
+  scale_alpha_manual(values = c(1, 1, 0.15)) +#
+  geom_vline(data= chr3A_Br, aes(xintercept= physical_position), size=0.75) +#
+  geom_text(data= chr3A_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +#
+  theme(legend.title=element_blank()) +#
+  NULL
+tbl_df(to_plot) %>% #
+	filter(chromosome=="chr3A", physical_position > chr3A_Br$physical_position-padding_lower,  physical_position <chr3A_Br$physical_position+ padding_upper) %>%#
+ggplot(aes(x = physical_position, y = MAF)) + #
+	geom_vline(data= chr3A_Br, aes(xintercept= physical_position), size=0.75) +#
+	geom_text(data= chr3A_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +#
+	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=scan_size) +#
+	facet_grid(chromosome~., scales="free") +#
+	ylim(scan_ylim) +#
+	xlab(scan_xlab) +#
+	ylab(scan_ylab) +#
+	scale_color_manual(values = scan_plot_colours) +#
+	scale_alpha_manual(values = scan_plot_alpha) +#
+	scan_plot_theme +#
+	NULL
+#scan plot parameters#
+padding_lower=30#
+padding_upper=30#
+scan_ylim=c(-0.05,1)#
+scan_size=0.3#
+scan_plot_theme<- theme_minimal() +#
+  	theme(legend.position="top", #
+  		legend.title=element_blank()) #
+scan_xlab<-"median physical position of window (mb)"#
+scan_ylab<-"frequency of minor allele"#
+scan_plot_colours<-customPalette[c(1,3,8)]#
+scan_plot_alpha<-c(1, 1, 0.3)
+tbl_df(to_plot) %>% #
+	filter(chromosome=="chr3A", physical_position > chr3A_Br$physical_position-padding_lower,  physical_position <chr3A_Br$physical_position+ padding_upper) %>%#
+ggplot(aes(x = physical_position, y = MAF)) + #
+	geom_vline(data= chr3A_Br, aes(xintercept= physical_position), size=0.75) +#
+	geom_text(data= chr3A_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +#
+	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=scan_size) +#
+	facet_grid(chromosome~., scales="free") +#
+	ylim(scan_ylim) +#
+	xlab(scan_xlab) +#
+	ylab(scan_ylab) +#
+	scale_color_manual(values = scan_plot_colours) +#
+	scale_alpha_manual(values = scan_plot_alpha) +#
+	scan_plot_theme +#
+	NULL
+#scan plot parameters#
+padding_lower=30#
+padding_upper=30#
+scan_ylim=c(-0.05,1)#
+scan_size=0.3#
+scan_plot_theme<- theme_minimal() +#
+  	theme(legend.position="top", #
+  		legend.title=element_blank()) #
+scan_xlab<-"median physical position of window (mb)"#
+scan_ylab<-"frequency of minor allele"#
+scan_plot_colours<-customPalette[c(1,3,8)]#
+scan_plot_alpha<-c(1, 1, 0.2)
+tbl_df(to_plot) %>% #
+	filter(chromosome=="chr3A", physical_position > chr3A_Br$physical_position-padding_lower,  physical_position <chr3A_Br$physical_position+ padding_upper) %>%#
+ggplot(aes(x = physical_position, y = MAF)) + #
+	geom_vline(data= chr3A_Br, aes(xintercept= physical_position), size=0.75) +#
+	geom_text(data= chr3A_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +#
+	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=scan_size) +#
+	facet_grid(chromosome~., scales="free") +#
+	ylim(scan_ylim) +#
+	xlab(scan_xlab) +#
+	ylab(scan_ylab) +#
+	scale_color_manual(values = scan_plot_colours) +#
+	scale_alpha_manual(values = scan_plot_alpha) +#
+	scan_plot_theme +#
+	NULL
+padding_lower=30#
+padding_upper=30#
+scan_ylim=c(-0.05,1)#
+scan_size=0.3#
+scan_plot_theme<- theme_minimal() +#
+  	theme(legend.position="top", #
+  		legend.title=element_blank()) #
+scan_xlab<-"median physical position of window (mb)"#
+scan_ylab<-"frequency of minor allele"#
+scan_plot_colours<-customPalette[c(1,3,8)]#
+scan_plot_alpha<-c(1, 1, 0.25)
+tbl_df(to_plot) %>% #
+	filter(chromosome=="chr3A", physical_position > chr3A_Br$physical_position-padding_lower,  physical_position <chr3A_Br$physical_position+ padding_upper) %>%#
+ggplot(aes(x = physical_position, y = MAF)) + #
+	geom_vline(data= chr3A_Br, aes(xintercept= physical_position), size=0.75) +#
+	geom_text(data= chr3A_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +#
+	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=scan_size) +#
+	facet_grid(chromosome~., scales="free") +#
+	ylim(scan_ylim) +#
+	xlab(scan_xlab) +#
+	ylab(scan_ylab) +#
+	scale_color_manual(values = scan_plot_colours) +#
+	scale_alpha_manual(values = scan_plot_alpha) +#
+	scan_plot_theme +#
+	NULL
+tbl_df(to_plot) %>% #
+	filter(chromosome=="chr3B", physical_position > chr3B_Br$physical_position-padding_lower,  physical_position <chr3B_Br$physical_position+ padding_upper) %>%#
+ggplot(aes(x = physical_position, y = MAF)) + #
+	geom_vline(data= chr3B_Br, aes(xintercept= physical_position), size=0.75) +#
+	geom_text(data= chr3B_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +#
+	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=scan_size) +#
+	facet_grid(chromosome~., scales="free") +#
+	ylim(scan_ylim) +#
+	xlab(scan_xlab) +#
+	ylab(scan_ylab) +#
+	scale_color_manual(values = scan_plot_colours) +#
+	scale_alpha_manual(values = scan_plot_alpha) +#
+	scan_plot_theme +#
+	NULL
+chr4B_plot_tbl<-filter(to_plot, CHR == "chr4B", physical_position > 515-50,  physical_position <515+ 50)  #
+#
+chr4B_plot<-ggplot() + #
+	geom_line(data= chr4B_QTL_region, aes(x=x, y=y), color="black", size=0.75) +#
+	geom_point(data= chr4B_blast, aes(x=physical_position, y=1), color="black", shape="|", size=6) +#
+	geom_text(data= chr4B_blast, aes(x=physical_position, label=marker_name, y=0.8), angle=90, size=3) +#
+	geom_line(data= chr4B_plot_tbl, aes(x = physical_position, y = MAF, color = Improvement_status, group = Accession, alpha= Improvement_status), size=0.3) +#
+	facet_grid(chromosome~., scales="free") +#
+	ylim(scan_ylim) +#
+	xlab(scan_xlab) +#
+	ylab(scan_ylab) +#
+	scale_color_manual(values = scan_plot_colours) +#
+	scale_alpha_manual(values = scan_plot_alpha) +#
+	scan_plot_theme +#
+	NULL
+chr4B_plot
+chr4B_plot_tbl
+filter(to_plot, CHR == "chr4B", physical_position > 515-50,  physical_position <515+ 50)
+chr4B_plot_tbl<-filter(to_plot, chromosome == "chr4B", physical_position > 515-50,  physical_position <515+ 50)
+chr4B_plot_tbl<-filter(to_plot, chromosome == "chr4B", physical_position > 515-50,  physical_position <515+ 50)  #
+#
+chr4B_plot<-ggplot() + #
+	geom_line(data= chr4B_QTL_region, aes(x=x, y=y), color="black", size=0.75) +#
+	geom_point(data= chr4B_blast, aes(x=physical_position, y=1), color="black", shape="|", size=6) +#
+	geom_text(data= chr4B_blast, aes(x=physical_position, label=marker_name, y=0.8), angle=90, size=3) +#
+	geom_line(data= chr4B_plot_tbl, aes(x = physical_position, y = MAF, color = Improvement_status, group = Accession, alpha= Improvement_status), size=0.3) +#
+	facet_grid(chromosome~., scales="free") +#
+	ylim(scan_ylim) +#
+	xlab(scan_xlab) +#
+	ylab(scan_ylab) +#
+	scale_color_manual(values = scan_plot_colours) +#
+	scale_alpha_manual(values = scan_plot_alpha) +#
+	scan_plot_theme +#
+	NULL
+chr4B_plot
+outlier_grob<-ggplotGrob(outlier_plots)#
+g1 <- ggplotGrob(chr3A_plot + theme(legend.position="none", axis.title.x=element_blank(), axis.title.y=element_blank(), strip.background = element_blank(), strip.placement = "outside"))#
+g2 <- ggplotGrob(chr3B_plot + theme(legend.position="none", axis.title.x=element_blank(), axis.title.y=element_blank(), strip.background = element_blank(), strip.placement = "outside"))#
+g3 <- ggplotGrob(chr4B_plot + theme(legend.position="none", axis.title.x=element_blank(), axis.title.y=element_blank(), strip.background = element_blank(), strip.placement = "outside"))#
+legend = gtable_filter(ggplot_gtable(#
+		ggplot_build(chr3A_plot+ guides(#
+			colour = guide_legend(override.aes = list(alpha = 1, size=1))))), "guide-box")#
+#
+scans<-grid.arrange(legend, g1, g2, g3 , ncol=1, heights=c(0.3,1,1,1), #
+  bottom=textGrob("median physical position of sliding window (mb)", gp=gpar(fontsize=12)),#
+  left=textGrob(paste0("frequency of minor allele"), gp=gpar(fontsize=12), rot=90))#
+#
+Alabel<-textGrob("A", x = unit(0, "npc"), y= unit(0.95, "npc"), just=c("left","top"), gp=gpar(col="black", fontsize=18, fontface="bold"))#
+Blabel<-textGrob("B", x = unit(0, "npc"), y= unit(0.95, "npc"), just=c("left","top"), gp=gpar(col="black", fontsize=18, fontface="bold"))
+chr3A_plot<-tbl_df(to_plot) %>% #
+	filter(chromosome=="chr3A", physical_position > chr3A_Br$physical_position-padding_lower,  physical_position <chr3A_Br$physical_position+ padding_upper) %>%#
+ggplot(aes(x = physical_position, y = MAF)) + #
+	geom_vline(data= chr3A_Br, aes(xintercept= physical_position), size=0.75) +#
+	geom_text(data= chr3A_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +#
+	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=scan_size) +#
+	facet_grid(chromosome~., scales="free") +#
+	ylim(scan_ylim) +#
+	xlab(scan_xlab) +#
+	ylab(scan_ylab) +#
+	scale_color_manual(values = scan_plot_colours) +#
+	scale_alpha_manual(values = scan_plot_alpha) +#
+	scan_plot_theme +#
+	NULL#
+#
+chr3B_plot<-tbl_df(to_plot) %>% #
+	filter(chromosome=="chr3B", physical_position > chr3B_Br$physical_position-padding_lower,  physical_position <chr3B_Br$physical_position+ padding_upper) %>%#
+ggplot(aes(x = physical_position, y = MAF)) + #
+	geom_vline(data= chr3B_Br, aes(xintercept= physical_position), size=0.75) +#
+	geom_text(data= chr3B_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +#
+	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=scan_size) +#
+	facet_grid(chromosome~., scales="free") +#
+	ylim(scan_ylim) +#
+	xlab(scan_xlab) +#
+	ylab(scan_ylab) +#
+	scale_color_manual(values = scan_plot_colours) +#
+	scale_alpha_manual(values = scan_plot_alpha) +#
+	scan_plot_theme +#
+	NULL
+outlier_grob<-ggplotGrob(outlier_plots)#
+g1 <- ggplotGrob(chr3A_plot + theme(legend.position="none", axis.title.x=element_blank(), axis.title.y=element_blank(), strip.background = element_blank(), strip.placement = "outside"))#
+g2 <- ggplotGrob(chr3B_plot + theme(legend.position="none", axis.title.x=element_blank(), axis.title.y=element_blank(), strip.background = element_blank(), strip.placement = "outside"))#
+g3 <- ggplotGrob(chr4B_plot + theme(legend.position="none", axis.title.x=element_blank(), axis.title.y=element_blank(), strip.background = element_blank(), strip.placement = "outside"))#
+legend = gtable_filter(ggplot_gtable(#
+		ggplot_build(chr3A_plot+ guides(#
+			colour = guide_legend(override.aes = list(alpha = 1, size=1))))), "guide-box")#
+#
+scans<-grid.arrange(legend, g1, g2, g3 , ncol=1, heights=c(0.3,1,1,1), #
+  bottom=textGrob("median physical position of sliding window (mb)", gp=gpar(fontsize=12)),#
+  left=textGrob(paste0("frequency of minor allele"), gp=gpar(fontsize=12), rot=90))#
+#
+Alabel<-textGrob("A", x = unit(0, "npc"), y= unit(0.95, "npc"), just=c("left","top"), gp=gpar(col="black", fontsize=18, fontface="bold"))#
+Blabel<-textGrob("B", x = unit(0, "npc"), y= unit(0.95, "npc"), just=c("left","top"), gp=gpar(col="black", fontsize=18, fontface="bold"))
+grid.arrange(Alabel, outlier_grob, Blabel, scans,  nrow=2, widths=c(0.025,1), heights=c(1.5,3.3))
+scans<-grid.arrange(legend, g1, g2, g3 , ncol=1, heights=c(0.3,1,1,1), #
+  bottom=textGrob("median physical position of sliding window (mb)", gp=gpar(fontsize=12)),#
+  left=textGrob(paste0("frequency of minor allele"), gp=gpar(fontsize=12), rot=90))
+grid.arrange(Alabel, outlier_grob, Blabel, scans,  nrow=2, widths=c(0.025,1), heights=c(1.5,3.3))
+pdf(file=paste0(plot_export_prefix,"TtBtr1_and_chr4B_all_SNPs.pdf"), height= 4.8*(6/3.3), width=8*1.025)#
+grid.arrange(Alabel, outlier_grob, Blabel, scans,  nrow=2, widths=c(0.025,1), heights=c(1.5,3.3))#
+dev.off()
+window_size=1000000
+window_positions
+window_positions<-get_window_positions(traw_regions, window_size, increments_per_window)
+s
+window_positions<-get_window_positions(traw_regions, window_size, increments_per_window)
+window_positions
+window_size=1000000
+MAF_by_physical<-MAF_by_physical_window(traw_dom_MAF, window_size=1000000, increments_per_window=2, location)
+MAF_by_physical
+filter(MAF_by_window, Accession %in% domesticated_columns %>%#
+  group_by(chromsome, rounded) %>%#
+  summarize(max_dom_MAF=max(MAF, na.rm=TRUE)) %>%#
+  filter(max_dom_MAF<0.05) %>%#
+  filter(chromsome=="chr3A", rounded/1000000 > chr3A_Br$physical_position-padding_lower,  rounded/1000000 <chr3A_Br$physical_position+ padding_upper)
+filter(MAF_by_window, Accession %in% domesticated_columns %>%#
+  group_by(chromsome, rounded) %>%#
+  summarize(max_dom_MAF=max(MAF, na.rm=TRUE)) %>%#
+  filter(max_dom_MAF<0.05) %>%#
+  filter(chromosome=="chr3A", rounded/1000000 > chr3A_Br$physical_position-padding_lower,  rounded/1000000 <chr3A_Br$physical_position+ padding_upper)
+filter(MAF_by_window, Accession %in% domesticated_columns) %>%#
+  group_by(chromsome, rounded) %>%#
+  summarize(max_dom_MAF=max(MAF, na.rm=TRUE)) %>%#
+  filter(max_dom_MAF<0.05) %>%#
+  filter(chromosome=="chr3A", rounded/1000000 > chr3A_Br$physical_position-padding_lower,  rounded/1000000 <chr3A_Br$physical_position+ padding_upper)
+filter(MAF_by_physical, Accession %in% domesticated_columns) %>%#
+  group_by(chromsome, rounded) %>%#
+  summarize(max_dom_MAF=max(MAF, na.rm=TRUE)) %>%#
+  filter(max_dom_MAF<0.05) %>%#
+  filter(chromosome=="chr3A", rounded/1000000 > chr3A_Br$physical_position-padding_lower,  rounded/1000000 <chr3A_Br$physical_position+ padding_upper)
+filter(MAF_by_physical, Accession %in% domesticated_columns) %>%#
+  group_by(chromosome, rounded) %>%#
+  summarize(max_dom_MAF=max(MAF, na.rm=TRUE)) %>%#
+  filter(max_dom_MAF<0.05) %>%#
+  filter(chromosome=="chr3A", rounded/1000000 > chr3A_Br$physical_position-padding_lower,  rounded/1000000 <chr3A_Br$physical_position+ padding_upper)
+max_MAF_by_region<-function(MAF_by_physical, columns, chromosome, lower_bound_mb, upper_bound_mb, threshold){#
+	filter(MAF_by_physical, Accession %in% columns) %>%#
+		group_by(chromosome, rounded) %>%#
+		summarize(max_dom_MAF=max(MAF, na.rm=TRUE)) %>%#
+		filter(max_dom_MAF<threshold) %>%#
+		filter(chromosome== chromosome, rounded/1000000 > lower_bound_mb,  rounded/1000000 <upper_bound_mb) #
+}
+max_MAF_by_region(MAF_by_physical, domesticated_columns, "chr3A", lower_bound_mb= chr3A_Br$physical_position-padding_lower, upper_bound_mb = chr3A_Br$physical_position+ padding_upper, threshold=0.05)
+max_MAF_by_region<-function(MAF_by_physical, columns, chromosome_name, lower_bound_mb, upper_bound_mb, threshold){#
+	filter(MAF_by_physical, Accession %in% columns) %>%#
+		group_by(chromosome, rounded) %>%#
+		summarize(max_dom_MAF=max(MAF, na.rm=TRUE)) %>%#
+		filter(max_dom_MAF<threshold) %>%#
+		filter(chromosome== chromosome_name, rounded/1000000 > lower_bound_mb,  rounded/1000000 <upper_bound_mb) #
+}
+max_MAF_by_region(MAF_by_physical, domesticated_columns, "chr3A", lower_bound_mb= chr3A_Br$physical_position-padding_lower, upper_bound_mb = chr3A_Br$physical_position+ padding_upper, threshold=0.05)
+max_MAF_by_region(MAF_by_physical, domesticated_columns, "chr3B", lower_bound_mb= chr3B_Br$physical_position-padding_lower, upper_bound_mb = chr3B_Br$physical_position+ padding_upper, threshold=0.05)
+max_MAF_by_region(MAF_by_physical, domesticated_columns, "chr3B", lower_bound_mb= chr3B_Br$physical_position-padding_lower, upper_bound_mb = chr3B_Br$physical_position+ padding_upper, threshold=0.05) %>% print(n=100)
+max_MAF_by_region(MAF_by_physical, domesticated_columns, "chr4B", lower_bound_mb= 515-50, upper_bound_mb = 515+ 50, threshold=0.05) %>% print(n=100)
+filter(MAF_by_window, Accession==sample, chromosome=="chr3A", rounded/1000000>59, rounded/1000000<63) %>%
+summarise(sum(num_calls_roll))
+filter(MAF_by_physical, #
+	Accession==sample, #
+	(chromosome=="chr3A", rounded/1000000>59, rounded/1000000<63) |#
+	(chromosome=="chr3B", rounded/1000000>94, rounded/1000000<99.5) |#
+	(chromosome=="chr4B", rounded/1000000>509, rounded/1000000<512)) %>%#
+summarise(sum(num_calls))
+filter(MAF_by_physical, #
+	Accession==sample, #
+	(chromosome=="chr3A", rounded/1000000>59, rounded/1000000<63) |#
+	(chromosome=="chr3B", rounded/1000000>94, rounded/1000000<99.5) |#
+	(chromosome=="chr4B", rounded/1000000>509, rounded/1000000<512))
+filter(MAF_by_physical, #
+	Accession==sample,
+(chromosome=="chr3A", rounded/1000000>59, rounded/1000000<63) |
+filter(MAF_by_physical, #
+	Accession==sample, #
+	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<63) |#
+	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<99.5) |#
+	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<512)) %>%#
+summarise(sum(num_calls))
+(26+69+98)*2
+filter(MAF_by_physical, #
+	Accession==sample, #
+	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<63) |#
+	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<99.5) |#
+	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<512))
+filter(MAF_by_physical, #
+	Accession==sample, #
+	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<63) |#
+	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<99.5) |#
+	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<512)) %>%#
+	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles), MAF=minor_alleles_sum/num_calls_sum)
+filter(MAF_by_physical, #
+	Accession==domesticated_columns, #
+	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<63) |#
+	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<99.5) |#
+	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<512)) %>%#
+	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles), MAF=minor_alleles_sum/num_calls_sum)
+warnings()
+filter(MAF_by_physical, #
+	Accession %in% domesticated_columns, #
+	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<63) |#
+	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<99.5) |#
+	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<512)) %>%#
+	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles), MAF=minor_alleles_sum/num_calls_sum)
+ungroup(MAF_by_physical) %>% group_by(Accession) %>%#
+filter( #
+	Accession %in% domesticated_columns, #
+	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<63) |#
+	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<99.5) |#
+	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<512)) %>%#
+	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles), MAF=minor_alleles_sum/num_calls_sum)
+dom_sweeps<-ungroup(MAF_by_physical) %>% group_by(Accession) %>%#
+filter( #
+	Accession %in% domesticated_columns, #
+	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<63) |#
+	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<99.5) |#
+	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<512)) %>%#
+	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles), MAF=minor_alleles_sum/num_calls_sum)
+summary(dom_sweeps$MAF)
+input_prefix="../../5Variants/3Modern_Samples_Merge_bedfilter_noindels_altref_altbam/mapQ30/"#
+metadata_filename="../../2Reference_Genomes/Zavitan_v2/metadata/origins.txt"#
+data_dir_diversity<-"Outliers_Avni/data/"#
+#
+traw<-read_tsv(paste0(input_prefix,"S1minDP2/merged.traw")) %>% join_chromosome_halves_rename_samples()#
+location<-load_metadata(metadata_filename)#
+outliers<-load_diversity_scan_data(data_dir_diversity)
+source("functions.r")#
+#
+############
+# load data#
+############
+#
+input_prefix="../../5Variants/3Modern_Samples_Merge_bedfilter_noindels_altref_altbam/mapQ30/"#
+metadata_filename="../../2Reference_Genomes/Zavitan_v2/metadata/origins.txt"#
+data_dir_diversity<-"Outliers_Avni/data/"#
+#
+traw<-read_tsv(paste0(input_prefix,"S1minDP2/merged.traw")) %>% join_chromosome_halves_rename_samples()#
+location<-load_metadata(metadata_filename)#
+outliers<-load_diversity_scan_data(data_dir_diversity)
+traw
+accession_cols<-location$Accession[location$Accession %in% colnames(traw)]
+accession_cols
+traw[, sample]
+traw
+sample="UC10164S1"
+traw[, sample]
+(traw[,sample]==2)
+switch_minor_allele<-(traw[,sample]==2)
+as.logical(traw[,sample]==2)
+traw_MAF<-traw
+traw_MAF[switch_minor_allele, accession_cols]<-abs(traw[switch_minor_allele, accession_cols]-2)
+traw_MAF
+sum(traw_MAF$UC10164S1)
+filter(traw_MAF, sample==1)
+filter(traw_MAF, as.name(sample)==1)
+as.name(sample)
+samplename<-as.name(sample)
+filter(traw_MAF, samplename==1)
+filter(traw_MAF, UC10164S1==1)
+filter_(traw_MAF, samplename==1)
+filter(traw_MAF, sym(samplename)==1)
+filter(traw_MAF, !!sym(samplename)==1)
+filter(traw_MAF, (!!sym(samplename))==1)
+filter(traw_MAF, (!!sym(sample))==1)
+filter(traw_MAF, !(!!sym(sample))==1)
+filter(traw_MAF, !(!!sym(sample))==1 & !is.na( (!!sym(sample)) ))
+MAF_by_SNP<-filter(traw_MAF, !(!!sym(sample))==1 & !is.na( (!!sym(sample)) )) %>%#
+		tidyr::gather(traw_dom_MAF, key="Accession", value="genotype", accession_cols) %>%#
+		group_by(chromosome, Accession) %>%#
+		arrange(chromosome, Accession, position) %>%#
+		mutate(#
+			num_calls_roll=zoo::rollapply(!is.na(genotype), snp_window_size, sum, by= window_move_size, fill=NA, na.rm=TRUE),#
+			minor_alleles_roll=zoo::rollapply(genotype, snp_window_size, sum, by= window_move_size, fill=NA, na.rm=TRUE),#
+			MAF= minor_alleles_roll/(2*num_calls_roll),#
+			physical_position = zoo::rollapply(position , snp_window_size, median, by= window_move_size, fill=NA, na.rm=TRUE)/1000000#
+    ) %>%#
+  filter(!is.na(physical_position))
+MAF_by_SNP<-filter(traw_MAF, !(!!sym(sample))==1 & !is.na( (!!sym(sample)) )) %>%#
+		tidyr::gather(key="Accession", value="genotype", accession_cols) %>%#
+		group_by(chromosome, Accession) %>%#
+		arrange(chromosome, Accession, position) %>%#
+		mutate(#
+			num_calls_roll=zoo::rollapply(!is.na(genotype), snp_window_size, sum, by= window_move_size, fill=NA, na.rm=TRUE),#
+			minor_alleles_roll=zoo::rollapply(genotype, snp_window_size, sum, by= window_move_size, fill=NA, na.rm=TRUE),#
+			MAF= minor_alleles_roll/(2*num_calls_roll),#
+			physical_position = zoo::rollapply(position , snp_window_size, median, by= window_move_size, fill=NA, na.rm=TRUE)/1000000#
+    ) %>%#
+  filter(!is.na(physical_position))
+snp_window_size=50#
+window_move_size=1
+MAF_by_SNP<-filter(traw_MAF, !(!!sym(sample))==1 & !is.na( (!!sym(sample)) )) %>%#
+		tidyr::gather(key="Accession", value="genotype", accession_cols) %>%#
+		group_by(chromosome, Accession) %>%#
+		arrange(chromosome, Accession, position) %>%#
+		mutate(#
+			num_calls_roll=zoo::rollapply(!is.na(genotype), snp_window_size, sum, by= window_move_size, fill=NA, na.rm=TRUE),#
+			minor_alleles_roll=zoo::rollapply(genotype, snp_window_size, sum, by= window_move_size, fill=NA, na.rm=TRUE),#
+			MAF= minor_alleles_roll/(2*num_calls_roll),#
+			physical_position = zoo::rollapply(position , snp_window_size, median, by= window_move_size, fill=NA, na.rm=TRUE)/1000000#
+    ) %>%#
+  filter(!is.na(physical_position))
+MAF_by_SNP
+ungroup(MAF_by_SNP) %>% group_by(Accession) %>% summarise(mean(MAF))
+ungroup(MAF_by_SNP) %>% group_by(Accession) %>% summarise(mean(MAF, na.rm=TRUE))
+ungroup(MAF_by_SNP) %>% group_by(Accession) %>% summarise(mean(MAF, na.rm=TRUE)) %>% print(n=100)
+ungroup(MAF_by_SNP) %>% group_by(Accession) %>% summarise(sum(MAF<0.05, na.rm=TRUE)) %>% print(n=100)
+ungroup(MAF_by_SNP) %>% group_by(Accession) %>% summarise(sum(MAF<0.05, na.rm=TRUE)/ sum(!is.na(MAF))) %>% print(n=100)
+filter(head(traw_MAF,1000), !(!!sym(sample))==1 & !is.na( (!!sym(sample)) )) %>% MAF_by_SNP_window(snp_window_size, window_move_size, location)
+filter(head(traw_MAF,1000), !(!!sym(sample))==1 & !is.na( (!!sym(sample)) )) %>% MAF_by_SNP_window(snp_window_size, window_move_size, location) %>% print(n=200)
+similarity_by_SNP_window(head(traw_MAF,100), sample, snp_window_size, window_move_size, location)
+source("functions.r")
+similarity_by_SNP_window(head(traw_MAF,100), sample, snp_window_size, window_move_size, location)
+similarity_by_SNP_window(head(traw,100), sample, snp_window_size, window_move_size, location)

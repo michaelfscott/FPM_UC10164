@@ -3,3 +3,9 @@
 *.aux
 *.log
 *.swp
+*.tsv
+*.csv
+*.RData
+*.pdf
+*.txt
+*.py

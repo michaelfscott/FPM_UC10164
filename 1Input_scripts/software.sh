@@ -7,6 +7,16 @@ module load perl/5.22.0
 module load vcftools/0.1.15/gnu-4.9.2
 module load plink/1.90b3.40
 
+#refbias script location:
+REFBIAS_PATH=/lustre/projects/MAGIC_WHEAT/UC10164/scripts/1Input_scripts/refbias/
+#SNPhylo script location:
+SNPhylo_PATH=/home/ucbtmf1/packages/snphylo/SNPhylo/
+#ADMIXTURE
+PATH=/home/ucbtmf1/packages/admixture_linux-1.3.0/:$PATH
+#AdmixTools
+PATH=/home/ucbtmf1/packages/AdmixTools/bin/:$PATH
+#add htslib (tabix and bgzip)
+PATH=/home/ucbtmf1/packages/htslib/:$PATH
 #add bcftools to path
 PATH=/home/ucbtmf1/packages/bcftools/:$PATH
 #we also use the fastp toolkit to split paired-end fastq files
@@ -19,6 +29,7 @@ PATH=/home/ucbtmf1/packages/fastx_toolkit_0.0.13_binaries_Linux_2.6_amd64/:$PATH
 PATH=/home/ucbtmf1/.python2local/bin/:$PATH
 #vcf2bed is included in
 PATH=/home/ucbtmf1/packages/bin/:$PATH
+
 
 #To load r on this system, we must also modify the compilers
 module unload compilers
