@@ -15,7 +15,7 @@ metadata_filename=paste0(extra_data_dir, "/origins_with_location.txt")
 blast_res<-read.table(paste0(extra_data_dir, "/array_blast_result7.txt"))
 #traw_file="../../5Variants/3Modern_Samples_Merge_bedfilter_no_indels_altref_altbam/mapQ30/S1minDP2/merged.traw"
 traw_file=args[2]
-#traw_regions_file="../../5Variants/3Modern_Samples_Merge_bedfilter_no_indels_altref_altbam/mapQ30/merged.traw"
+#traw_regions_file="../../5Variants/3Modern_Samples_Merge_bedfilter_no_indels_altref_altbam/mapQ30/merged.regions.traw"
 traw_regions_file=args[3]
 #plot_export_prefix ="plots/"
 plot_export_prefix =args[4]
@@ -129,7 +129,7 @@ chr4B_QTL_region<-data.frame(x=c(475.3916, 540.1921), y=c(1,1))
 #the following mutates the calls for UC10164S1 in traw_regions to include only those with at least depth 2
 traw_sample<-traw[,c("chromosome", "CHR", "SNP", "position", "COUNTED", "ALT", "UC10164S1")] %>% 
 	mutate(UC10164S1_DP2=UC10164S1) %>% select(-UC10164S1)
-traw_regions_DP2<-full_join(traw_regions, traw_sample, by= c("chromosome", "CHR", "SNP", "position", "COUNTED", "ALT")) %>%
+traw_regions_DP2<-left_join(traw_regions, traw_sample, by= c("chromosome", "CHR", "SNP", "position", "COUNTED", "ALT")) %>%
 	mutate(UC10164S1=UC10164S1_DP2) %>% select(-UC10164S1_DP2)
 
 #make sure the minor allele in the domesticated population is labelled 0
@@ -141,21 +141,23 @@ traw_dom_MAF<-traw_regions_DP2
 traw_dom_MAF[switch_minor_allele, accession_cols]<-abs(traw_regions_DP2[switch_minor_allele, accession_cols]-2)
 
 #using SNP windows
-snp_window_size=150
-window_move_size=10
+snp_window_size=100
+window_move_size=50
 
 MAF_by_SNP<-MAF_by_SNP_window(traw_dom_MAF, snp_window_size, window_move_size, location)
+
+
 
 to_plot<-tbl_df(location) %>% right_join(MAF_by_SNP) %>%
 	mutate(Improvement_status=ifelse(Accession==sample, "ancient", Improvement_status)) %>%
 	filter(!Accession %in% c("UC10164S2", "Outgroup"))
 
-chr3A_plot<-tbl_df(to_plot) %>% 
+chr3A_plot<-filter(to_plot, !is.na(MAF)) %>% 
 	filter(chromosome=="chr3A", physical_position > chr3A_Br$physical_position-padding_lower,  physical_position <chr3A_Br$physical_position+ padding_upper) %>%
 ggplot(aes(x = physical_position, y = MAF)) + 
-	geom_vline(data= chr3A_Br, aes(xintercept= physical_position), size=0.75) +
 	geom_text(data= chr3A_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +
 	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=scan_size) +
+	geom_vline(data= chr3A_Br, aes(xintercept= physical_position), size=0.75) +
 	facet_grid(chromosome~., scales="free") +
 	ylim(scan_ylim) +
 	xlab(scan_xlab) +
@@ -165,12 +167,12 @@ ggplot(aes(x = physical_position, y = MAF)) +
 	scan_plot_theme +
 	NULL
 
-chr3B_plot<-tbl_df(to_plot) %>% 
+chr3B_plot<-filter(to_plot, !is.na(MAF)) %>%
 	filter(chromosome=="chr3B", physical_position > chr3B_Br$physical_position-padding_lower,  physical_position <chr3B_Br$physical_position+ padding_upper) %>%
 ggplot(aes(x = physical_position, y = MAF)) + 
-	geom_vline(data= chr3B_Br, aes(xintercept= physical_position), size=0.75) +
 	geom_text(data= chr3B_Br, aes(x=physical_position, label=marker_name, y=0.85), angle=90, size=3) +
 	geom_line(aes(color = Improvement_status, group = Accession, alpha= Improvement_status), size=scan_size) +
+	geom_vline(data= chr3B_Br, aes(xintercept= physical_position), size=0.75) +
 	facet_grid(chromosome~., scales="free") +
 	ylim(scan_ylim) +
 	xlab(scan_xlab) +
@@ -180,7 +182,7 @@ ggplot(aes(x = physical_position, y = MAF)) +
 	scan_plot_theme +
 	NULL
   
-chr4B_plot_tbl<-filter(to_plot, chromosome == "chr4B", physical_position > 515-50,  physical_position <515+ 50)  
+chr4B_plot_tbl<-filter(to_plot, chromosome == "chr4B", physical_position > 515-50,  physical_position <515+ 50, !is.na(MAF))  
 
 chr4B_plot<-ggplot() + 
 	geom_line(data= chr4B_QTL_region, aes(x=x, y=y), color="black", size=0.75) +
@@ -215,7 +217,7 @@ scans<-grid.arrange(legend, g1, g2, g3 , ncol=1, heights=c(0.3,1,1,1),
 Alabel<-textGrob("A", x = unit(0, "npc"), y= unit(0.95, "npc"), just=c("left","top"), gp=gpar(col="black", fontsize=18, fontface="bold"))
 Blabel<-textGrob("B", x = unit(0, "npc"), y= unit(0.95, "npc"), just=c("left","top"), gp=gpar(col="black", fontsize=18, fontface="bold"))
 
-pdf(file=paste0(plot_export_prefix,"TtBtr1_and_chr4B_all_SNPs.pdf"), height= 4.8*(6/3.3), width=8*1.025)
+pdf(file=paste0(plot_export_prefix,"TtBtr1_and_chr4B_all_SNPs_DP2.pdf"), height= 4.8*(6/3.3), width=8*1.025)
 grid.arrange(Alabel, outlier_grob, Blabel, scans,  nrow=2, widths=c(0.025,1), heights=c(1.5,3.3))
 dev.off()
 
@@ -229,7 +231,6 @@ dev.off()
 ################################
 
 #repeat the dom MAF analysis but use physical window sizes rather than SNP windows:
-
 MAF_by_physical<-MAF_by_physical_window(traw_dom_MAF, window_size=1000000, increments_per_window=2, location)
 
 #Only going to look at domesticated accessions, and only in the vicinity of the genes of interest
@@ -239,7 +240,7 @@ MAF_by_physical<-MAF_by_physical_window(traw_dom_MAF, window_size=1000000, incre
 max_MAF_by_region(MAF_by_physical, domesticated_columns, "chr3A", lower_bound_mb= chr3A_Br$physical_position-padding_lower, upper_bound_mb = chr3A_Br$physical_position+ padding_upper, threshold=0.05)
 
 #region on chr3B
-#The longest *continuous* window is from 94mb-99.5mb
+#The longest continuous window is from 94mb-99.5mb
 max_MAF_by_region(MAF_by_physical, domesticated_columns, "chr3B", lower_bound_mb= chr3B_Br$physical_position-padding_lower, upper_bound_mb = chr3B_Br$physical_position+ padding_upper, threshold=0.05) %>% print(n=100)
 
 #region on chr4B
@@ -250,24 +251,36 @@ max_MAF_by_region(MAF_by_physical, domesticated_columns, "chr4B", lower_bound_mb
 ######## number of outlier regions within sweeps
 ################################
 
+
 #Check the number of UC10164 calls in these regions:
 filter(MAF_by_physical, 
 	Accession==sample, 
-	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<63) |
-	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<99.5) |
-	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<512)) %>%
-	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles), MAF=minor_alleles_sum/num_calls_sum)
+	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<=63) |
+	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<=99.5) |
+	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<=512)) %>%
+	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles)/2, MAF=minor_alleles_sum/num_calls_sum)
 
 #for comparison, can look at the average number of minor alleles in these regions across all modern domesticated accessions. 
 dom_sweeps<-ungroup(MAF_by_physical) %>% group_by(Accession) %>%
 filter( 
 	Accession %in% domesticated_columns, 
-	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<63) |
-	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<99.5) |
-	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<512)) %>%
-	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles), MAF=minor_alleles_sum/num_calls_sum)
+	(chromosome=="chr3A" & rounded/1000000>59 & rounded/1000000<=63) |
+	(chromosome=="chr3B" & rounded/1000000>94 & rounded/1000000<=99.5) |
+	(chromosome=="chr4B" & rounded/1000000>509 & rounded/1000000<=512)) %>%
+	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles)/2, MAF=minor_alleles_sum/num_calls_sum)
 summary(dom_sweeps$MAF)
+sd(dom_sweeps$MAF)
+1/99
 
+filter(traw_dom_MAF, 
+	(chromosome=="chr3A" & position/1000000>59 & position/1000000<63) |
+	(chromosome=="chr3B" & position/1000000>94 & position/1000000<99.5) |
+	(chromosome=="chr4B" & position/1000000>509 & position/1000000<512)) %>%
+	tidyr::gather(key=Accession, value=non_dom_alleles, accession_cols) %>%
+	group_by(Accession) %>%
+	summarise(num_calls_sum=sum(num_calls), minor_alleles_sum=sum(minor_alleles)/2, MAF=minor_alleles_sum/num_calls_sum)
+
+	
 ################################
 ######## Implied selection coefficients from sweep sizes
 ################################
@@ -315,24 +328,5 @@ calculate_sel(0.05, 0.995, 3*1000000)
 calculate_sel(0.2, 0.99, 3*1000000)
 calculate_sel(0.2, 0.995, 3*1000000)
 
-################################
-######## Concordance with UC10164 split by chromosome
-################################
-
-#UPDATE ONCE PLOT_ORDER IS DECIDED
-
-#total_concordance<-(ungroup(conc) %>% group_by(variable) %>% summarise(concordance=sum(matching)/sum(num_calls)) %>% data.frame())[,2]
-
-#export1<-conc %>% summarise(concordance=sum(matching)/sum(num_calls)) %>% ungroup() %>%
-#  tidyr::spread(key=CHR, value=concordance) 
-
-#location2<-location[export1[,"Accession"],]
-#location2$label_number<-as.numeric(gsub("UC10164","10164",gsub("[A-Z][A-Z]\\-","",location2$Label)))
-#plot_order<-order(factor(location2$Region, levels=rev(c("Ancient_Egyptian", "Indian_Ocean", "Mediterranean", "Eastern_Europe", "Caucasus", "Northern_Levant", "Southern_Levant"))), location2$label_number)
-#plot_order<-plot_order[c(11:14,10,1:9,15:65)]
-
-#export2<-data.frame(export1[rev(plot_order[-65]),])
-
-#write.csv(export2, file=paste0(plot_export_prefix,"concordance_by_chr.csv"),row.names=FALSE, quote=FALSE)
 
 }
