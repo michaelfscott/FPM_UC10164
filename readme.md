@@ -49,6 +49,6 @@ These scripts are for replication of the analyses in Scott et al. (2019) "Whole 
 <p>This vcf also includes genotypes called from diploid outgroup species using data accession numbers SRR4010671 and SRR4010672 (Triticum urartu) and SAMEA2342530 (Aegilops speltoides) used for A and B subgenome outgroup genotypes, respectively. 
 </p>
 
-<p>With all the relevant variants in hand, you can skip to section 4Compare_With_Modern_Samples. 
+<p>With all the relevant genotype calls in hand, you can skip to section 4Compare_With_Modern_Samples. 
 </p>
 
