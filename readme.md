@@ -43,7 +43,7 @@ These scripts are for replication of the analyses in Scott et al. (2019) "Whole 
 
 <h3> VARIANTS </h3>
 
-<p>To skip the alignment and genotype calling steps. The variants can be downloaded from http://mtweb.cs.ucl.ac.uk/mus/www/aDNA_emmer_wheat/.
+<p>To skip the alignment and genotype calling steps. The called genotypes can be downloaded from http://mtweb.cs.ucl.ac.uk/mus/www/aDNA_emmer_wheat/.
 </p>
 
 <p>This vcf also includes genotypes called from diploid outgroup species using data accession numbers SRR4010671 and SRR4010672 (Triticum urartu) and SAMEA2342530 (Aegilops speltoides) used for A and B subgenome outgroup genotypes, respectively. 
