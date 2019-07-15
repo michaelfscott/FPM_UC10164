@@ -13,7 +13,7 @@ Dstats_path=args[3]
 plot_export_prefix=args[4]
 
 source("../0Rfunctions/functions.r")
-source("Phylogeny_plot_functions.r")
+source("../0Rfunctions/Phylogeny_plot_functions.r")
 
 ######
 #read data

@@ -9,3 +9,5 @@
 *.pdf
 *.txt
 *.py
+*.Rapp.history
+*.DS_Store
