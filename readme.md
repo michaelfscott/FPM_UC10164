@@ -14,9 +14,9 @@ These scripts are for replication of the analyses in Scott et al. (2019) "Whole 
 <p>These scripts were tested on the UCL Research Computing HPC cluster, which uses a Sun Grid Engine scheduler. The flags for submission via SGE are at the head of each submission script.
 </p>
 
-# <p>Using SGE, parallel jobs can be submitted using the flag #$ -t 1-n, which submits n jobs, each of which has an environmental variable "$SGE_TASK_ID". Therefore, to replicate these scripts in a different environment, they may need to be edited accordingly (e.g., adding a loop of SGE_TASK_ID from {1..n}. </p>
+<!--- <p>Using SGE, parallel jobs can be submitted using the flag #$ -t 1-n, which submits n jobs, each of which has an environmental variable "$SGE_TASK_ID". Therefore, to replicate these scripts in a different environment, they may need to be edited accordingly (e.g., adding a loop of SGE_TASK_ID from {1..n}. </p> --->
 
-# <p>Another environmental variable is provided when submitting scripts: $TMPDIR. This specifies a temporary local directory in which intermediate files can be stored. In other environments, TMPDIR may need to be manually specified and/or removed. </p>
+<!--- <p>Another environmental variable is provided when submitting scripts: $TMPDIR. This specifies a temporary local directory in which intermediate files can be stored. In other environments, TMPDIR may need to be manually specified and/or removed. </p> --->
 
 <p>The required software is specified/loaded in "1Input_scripts/software.sh". This will have to be modified to reflect the local install locations.
 </p>
